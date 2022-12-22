@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
-import { Homepage } from './_homepage'
+import { Homepage } from './Homepage/_homepage'
 
 
 export default function App() {
