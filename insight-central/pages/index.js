@@ -6,7 +6,7 @@ import { Container, Heading, VStack } from '@chakra-ui/react'
 // import Homepage from './_homepage.js'
 import App from './_app'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
