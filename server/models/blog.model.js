@@ -5,7 +5,8 @@ const blogSchema=mongoose.Schema({
     body:{type:String,required:true},
     author:{type:mongoose.Types.ObjectId,ref:'user',required:true},
     category:{type:String,default:"other"},
-    date:{type:Date,default:Date.now()}
+    date:{type:Date,default:Date.now()},
+    views:{type:String,default:0}
 })
 
 

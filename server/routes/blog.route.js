@@ -8,9 +8,9 @@ const blogRoute=express.Router();
 
 //Creating a new blog
 blogRoute.post("/",Authentication,async(req,res)=>{
-    const {body,heading,category}=req.body; 
+    const {body,title,category}=req.body; 
     const userid=req.body.userid            //validating fields
-    if(body&&heading){
+    if(body&&title){
         try{
             const newBlog=await Blogmodel({...req.body,author:userid});   
             await newBlog.save();
@@ -37,6 +37,8 @@ blogRoute.get("/",async(req,res)=>{
         res.status(404).send({msg:err.message})
     }
 })
+
+//getting specific blog by id
 
 blogRoute.get("/:_id",async(req,res)=>{
 
