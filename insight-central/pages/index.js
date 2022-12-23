@@ -11,7 +11,7 @@ import App from './_app'
 export default function Home() {
   return (
     <>
-      <App/>
+      <h1>Hi this is the home page</h1>
     </>
   )
 }

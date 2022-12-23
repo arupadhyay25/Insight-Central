@@ -20,9 +20,9 @@ function Follower() {
             
           }
         : {
-            background: "white",
-            color: "black",
-            border:"1px solid black"
+            background: "coral",
+            color: "white",
+           
             
           }
     }
