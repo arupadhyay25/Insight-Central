@@ -23,15 +23,12 @@ function DrawerExample() {
     const btnRef = React.useRef()
     const [email,setEmail]=useState("em");
     const [avtar,setAvtar]=useState("https://bit.ly/broken-link")
-
     let data=JSON.parse(sessionStorage.getItem("data"))
 
     useEffect(()=>{
       setAvtar(data.data.img)
       setEmail(data.data.email)
     },[])
-
-    console.log(avtar)
 
 
     const handleLogOut=()=>{
