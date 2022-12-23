@@ -9,7 +9,9 @@
     padding-left: 20px;
     height: 100vh;
 }
-
+.leftDiv{
+    width: 50%;
+}
 
 @media screen and (min-width: 320px) and (max-width: 800px) {
     .mainDiv{
