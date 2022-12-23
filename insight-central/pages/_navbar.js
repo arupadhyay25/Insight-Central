@@ -1,7 +1,7 @@
 import React from 'react'
 import MainNavbar from '../Components/MainNavbar'
 
-function Navbar() {
+ export default function Navbar() {
   return (
     <div>
         <MainNavbar/>
@@ -9,4 +9,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+
