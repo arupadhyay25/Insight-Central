@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Drawer,
     DrawerBody,
@@ -16,11 +16,28 @@ import {
   import { BsBookmarks } from "react-icons/bs";
   import { RiFileList2Line,RiStarSFill } from "react-icons/ri";
   import { IoMdStats } from "react-icons/io";
+  import Link from 'next/link'
 
 function DrawerExample() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
+    const [email,setEmail]=useState("em");
     const [avtar,setAvtar]=useState("https://bit.ly/broken-link")
+
+    let data=JSON.parse(sessionStorage.getItem("data"))
+
+    useEffect(()=>{
+      setAvtar(data.data.img)
+      setEmail(data.data.email)
+    },[])
+
+    console.log(avtar)
+
+
+    const handleLogOut=()=>{
+      sessionStorage.clear()
+      window.location.reload();
+    }
   
     return (
       <>
@@ -38,10 +55,12 @@ function DrawerExample() {
             <DrawerCloseButton />
             <DrawerHeader></DrawerHeader>
             <DrawerBody>
+            <Link href="/profile">
               <Flex alignItems="center" mb="20px" gap="10px" color="rgba(117, 117, 117, 1)" cursor="pointer">
-                <CiUser size="1.5em"/>
-                <Text>Profile</Text>
+                  <CiUser size="1.5em"/>
+                  <Text>Profile</Text>
               </Flex>
+            </Link>
               <Flex alignItems="center" mb="20px" gap="10px" color="rgba(117, 117, 117, 1)" cursor="pointer">
               <BsBookmarks size="1.5em"/>
                 <Text>Lists</Text>
@@ -66,8 +85,8 @@ function DrawerExample() {
               <Text mb="20px" color="rgba(117, 117, 117, 1)" cursor="pointer">Apply to the Partner Program</Text>
               <Text mb="20px" color="rgba(117, 117, 117, 1)" cursor="pointer">Gift a membership</Text>
               <hr/>
-              <Text mt="15px" mb="20px" color="rgba(117, 117, 117, 1)" cursor="pointer">Sign out</Text>
-              <Text mb="20px" color="rgba(117, 117, 117, 1)" cursor="pointer">Email</Text>
+              <Text onClick={handleLogOut} mt="15px" mb="20px" color="rgba(117, 117, 117, 1)" cursor="pointer">Sign out</Text>
+              <Text mb="20px" color="rgba(117, 117, 117, 1)" cursor="pointer">{email}</Text>
             </DrawerBody>
           </DrawerContent>
         </Drawer>
