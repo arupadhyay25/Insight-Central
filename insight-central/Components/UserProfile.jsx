@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import Styles from "./profile.module.css"
-import { Text,
+import React, { useEffect, useState } from "react";
+import Styles from "./profile.module.css";
+import {
+  Text,
   Box,
   Avatar,
   Button,
@@ -12,7 +13,7 @@ import { Text,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Flex,
+  Image,
   FormControl,
   FormLabel
 } from '@chakra-ui/react'
@@ -68,8 +69,16 @@ const initState={
       console.log(err)
     })
   }
-
-
+  console.log(data);
+  const [bio, setBio] = useState("Bio");
+  const [blogdata, setData] = useState([]);
+  useEffect(() => {
+    fetch(`https://zany-red-toad-cape.cyclic.app/blog`)
+      .then((res) => res.json())
+      .then((r) => {
+        setData(r.data);
+      });
+  }, []);
 
   return (
     <>
