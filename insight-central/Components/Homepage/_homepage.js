@@ -37,6 +37,7 @@ import ProductDetails from "../../pages/carosoul/_productcarosoul";
 import Follower from "./_following";
 import Banner from "./_recomendation";
 import Link from "next/link";
+import styles from "./homepage.module.css";
 // for responsive carosoul
 import singleblog from "../../pages/singleblog";
 export default function Homepage() {
@@ -112,11 +113,16 @@ export default function Homepage() {
   };
   return (
     <>
-      <Container maxH="" maxW="container.2xl" p="0 20">
-        <Flex h="full" py="20">
+      <Container
+        maxH=""
+        maxW="container.2xl"
+        p="0"
+        className={styles.home - page}
+      >
+        <Flex flexDirection={{ base: "column", md: "row" }} h="full" p="0">
           {/* this is left side */}
           <VStack
-            w="70%"
+            w={{ base: "100%", md: "70%" }}
             h="full"
             p={{ base: 4, sm: 6 }}
             spacing={10}
@@ -136,7 +142,7 @@ export default function Homepage() {
                   onClick={() => setpage(page - 1)}
                   colorScheme={"blackAlpha"}
                   disabled={page == 1}
-                  >
+                >
                   -
                 </Button>
                 &nbsp;
@@ -145,7 +151,7 @@ export default function Homepage() {
                   onClick={() => setpage(page + 1)}
                   colorScheme={"blackAlpha"}
                   disabled={page == 3}
-                  >
+                >
                   +
                 </Button>
               </span>
@@ -159,10 +165,14 @@ export default function Homepage() {
                 <GridItem p={10} key={i} colSpan={{ base: 4, md: 5 }}>
                   <HStack>
                     <AspectRatio ratio={1} w={6}>
-                      <Img src={ele.img} />
+                      <Img src={ele.author.img} />
                     </AspectRatio>
-                    <Text fontWeight="bold" textAlign="left">
-                      Sayan Ghosh
+                    <Text
+                      textTransform={"capitalize"}
+                      fontWeight="bold"
+                      textAlign="left"
+                    >
+                      {ele.author.name}
                     </Text>
                     <Text fontWeight="bold" textAlign="left">
                       - {ele.date}
@@ -274,9 +284,11 @@ export default function Homepage() {
                 <GridItem key={i} colSpan="4">
                   <HStack>
                     <AspectRatio ratio={1} w={6}>
-                      <Img src={ele.img} />
+                      <Img src={ele.author.img} />
                     </AspectRatio>
-                    <Text textAlign="left">Sayan Ghosh</Text>
+                    <Text textTransform={"capitalize"} textAlign="left">
+                      {ele.author.name}
+                    </Text>
                     <Text textAlign="left">- December6</Text>
                   </HStack>
                   <Heading size="xs">{ele.title}</Heading>
@@ -335,9 +347,9 @@ export default function Homepage() {
                 <VStack alignItems="left" key={i}>
                   <HStack alignItems="left">
                     <AspectRatio ratio={1} w={6}>
-                      <Img src={ele.img} />
+                      <Img src={ele.author.img} />
                     </AspectRatio>
-                    <Text>Sayan GhOSH</Text>
+                    <Text>{ele.author.name}</Text>
                   </HStack>
                   <HStack gap={10}>
                     <Text>A versetile React Developer</Text>
@@ -357,7 +369,9 @@ export default function Homepage() {
                     <AspectRatio ratio={1} w="5">
                       <Img src={ele.img} />
                     </AspectRatio>
-                    <Text fontWeight="bold">Sayan</Text>
+                    <Text textTransform={"capitalize"} fontWeight="bold">
+                      {ele.author.name}
+                    </Text>
                   </Flex>
                   <Heading size="s">{ele.title}</Heading>
                   <HStack>

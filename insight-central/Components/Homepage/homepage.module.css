@@ -1,0 +1,8 @@
+.home-page {
+  zoom: 1;
+}
+@media only screen and (max-width: 425px) {
+    .home-page {
+      zoom: 0.5;
+    }
+}

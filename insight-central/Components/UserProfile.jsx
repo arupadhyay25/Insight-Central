@@ -43,7 +43,7 @@ function UserProfile() {
       .get("https://zany-red-toad-cape.cyclic.app/profile", {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Berer ${data?.token}`,
+          authorization: `Berer ${data?.token}`,
         },
       })
       .then((res) => {
@@ -61,9 +61,9 @@ function UserProfile() {
       .patch(`https://zany-red-toad-cape.cyclic.app/user`, {
         headers: {
           "Content-Type": "application/json",
-          authorization: `Berer ${data?.token}`,
-          body: JSON.stringify({ bio: bio }),
+          "authorization": `Berer ${data?.token}`,
         },
+        body: { bio },
       })
       .then((res) => {
         console.log(res.data);
@@ -77,10 +77,15 @@ function UserProfile() {
   const [bio, setBio] = useState("Bio");
   const [blogdata, setData] = useState([]);
   useEffect(() => {
-    fetch(`https://zany-red-toad-cape.cyclic.app/blog`)
+    fetch(`https://zany-red-toad-cape.cyclic.app/myblog`, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Berer ${data?.token}`,
+      },
+    })
       .then((res) => res.json())
       .then((r) => {
-        setData(r.data);
+        setData(r);
       });
   }, []);
 
@@ -93,26 +98,24 @@ function UserProfile() {
           </Text>
           <Text mt="30px">Your Posts</Text>
           <div style={{ marginTop: "30px" }}>
-            {blogdata
-              .filter((e) => e.author == data.data._id)
-              .map((e) => (
-                <div
-                  style={{
-                    display: "flex",
-                    marginTop: "30px",
-                    padding: "10px",
-                    gap: "20px",
-                  }}
-                >
-                  <Image w={"30%"} height="150px" src={e.img} />
-                  <div>
-                    <Text mt={10} fontSize={"xl"} fontWeight="bold">
-                      {e.title}
-                    </Text>
-                    {e.date}
-                  </div>
+            {blogdata.map((e) => (
+              <div
+                style={{
+                  display: "flex",
+                  marginTop: "30px",
+                  padding: "10px",
+                  gap: "20px",
+                }}
+              >
+                <Image w={"40%"} height="150px" src={e.img} />
+                <div>
+                  <Text mt={10} fontSize={"xl"} fontWeight="bold">
+                    {e.title}
+                  </Text>
+                  {e.date}
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
         </div>
 
