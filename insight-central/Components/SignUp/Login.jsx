@@ -24,35 +24,33 @@ import {
 } from "@chakra-ui/react";
 import { CiUser } from "react-icons/ci";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useState} from "react";
+import { useState } from "react";
 import SignUp from "./SignUp";
-import axios from "axios"
-
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  let route = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [show, setShow] = useState(false);
-//   const [userIcon,setuserIcon]=useState(true);
+  //   const [userIcon,setuserIcon]=useState(true);
   const handleClick = () => setShow(!show);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
   const toast = useToast();
 
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.type]: e.target.value });
   };
 
-
-
-    const register=()=>{
-        setLoading(true);
+  const register = () => {
+    setLoading(true);
     axios
       .post("https://zany-red-toad-cape.cyclic.app/login", formData)
       .then(({ data }) => {
-      console.log(data.token)
-        sessionStorage.setItem("data",JSON.stringify(data))
+        console.log(data.token);
+        sessionStorage.setItem("data", JSON.stringify(data));
         toast({
           title: data.message,
           description: "You are Successfully Logged in.",
@@ -61,6 +59,7 @@ const Login = () => {
           isClosable: true,
         });
         setLoading(false);
+        window.reload();
       })
       .catch((err) => {
         toast({
@@ -73,15 +72,15 @@ const Login = () => {
         setLoading(false);
         window.location.reload();
       });
-      setFormData({ email: "", password: "" })
-    }
+    setFormData({ email: "", password: "" });
+    // alert("dfgsdf")
+  };
 
   return (
     <Box w="35x">
       <Button _hover={{ bg: "white" }} onClick={onOpen} bg="white">
         <CiUser cursor="pointer" color="rgba(117, 117, 117, 1)" size="1.5em" />
       </Button>
-      
 
       <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
         <ModalOverlay />
@@ -94,11 +93,18 @@ const Login = () => {
                 <Tab>SIGN IN</Tab>
                 <Tab>I'M NEW HERE</Tab>
               </TabList>
-{/**************************************************************  Log In ***************************************/}
+              {/**************************************************************  Log In ***************************************/}
               <TabPanels>
                 <TabPanel>
                   <label>Email address</label>
-                  <Input type="email" placeholder="Enter email" mb="10px" mt="5px" value={formData.email} onChange={handleChange}/>
+                  <Input
+                    type="email"
+                    placeholder="Enter email"
+                    mb="10px"
+                    mt="5px"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
                   <label>Password</label>
                   <InputGroup mt="5px" size="md">
                     <Input
@@ -137,10 +143,9 @@ const Login = () => {
                   </Button>
                 </TabPanel>
 
-{/**************************************************************  Sign Up ***************************************/}
+                {/**************************************************************  Sign Up ***************************************/}
 
                 <SignUp />
-
               </TabPanels>
             </Tabs>
           </ModalBody>

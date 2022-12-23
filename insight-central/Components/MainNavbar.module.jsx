@@ -21,7 +21,7 @@ function MainNavbar() {
   },[data])
 
   return (
-    <>
+    <div className={Styles.topnav}>
       <Flex
         borderBottom="1px solid rgba(242, 242, 242, 1)"
         p="10px"
@@ -70,7 +70,7 @@ function MainNavbar() {
           </Box>
 
       </Flex>
-    </>
+    </div>
   );
 }
 
