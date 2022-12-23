@@ -5,7 +5,7 @@ import Navbar from "./_navbar";
 export default function Write(){
     return(
         <>
-        <Navbar/>
+        {/* <Navbar/> */}
         <WritePost />
         </>
     )

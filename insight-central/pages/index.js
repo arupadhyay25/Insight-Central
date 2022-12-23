@@ -1,12 +1,12 @@
-import App from './_app'
-import Navbar from './_navbar'
+import Homepage from "../Components/Homepage/_homepage";
+import Navbar from "./_navbar";
 
 // const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
     <>
-      <Navbar/>
+      <Homepage />
     </>
-  )
+  );
 }

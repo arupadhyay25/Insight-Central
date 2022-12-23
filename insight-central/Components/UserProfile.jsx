@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Styles from "./profile.module.css"
 import { Text,
   Box,
-  Avatar, 
+  Avatar,
   Button,
   useDisclosure,
   Modal,
@@ -77,6 +77,28 @@ const initState={
         <div className={Styles.leftDiv}>
           <Text mt="60px" fontSize="36px" fontWeight="bold">{userData.name}</Text>
           <Text mt="30px">Your Posts</Text>
+          <div style={{ marginTop: "30px" }}>
+            {blogdata
+              .filter((e) => e.author == data.data._id)
+              .map((e) => (
+                <div
+                  style={{
+                    display: "flex",
+                    marginTop: "30px",
+                    padding: "10px",
+                    gap: "20px",
+                  }}
+                >
+                  <Image w={"30%"} height="150px" src={e.img} />
+                  <div>
+                    <Text mt={10} fontSize={"xl"} fontWeight="bold">
+                      {e.title}
+                    </Text>
+                      {e.date}
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
 
         <div className={Styles.rightDiv}>
@@ -85,7 +107,15 @@ const initState={
           <Text mt="10px" fontWeight="bold">{userData.name}</Text>
           <Text mt="15px">{userData.bio}</Text>
 
-          <Text cursor="pointer" mt="15px" bg="white" color="green" onClick={onOpen}>Edit Profile</Text>
+          <Text
+            cursor="pointer"
+            mt="15px"
+            bg="white"
+            color="green"
+            onClick={onOpen}
+          >
+            Edit Profile
+          </Text>
 
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -103,7 +133,7 @@ const initState={
                   <Text borderBottom="1px solid grey">{userData.name}</Text>
                   <Text mt="5px" fontSize="14px">Appears on your Profile page, as your byline, and in your responses.</Text>
                 </FormControl>
-                <FormControl mt="20px" >
+                <FormControl mt="20px">
                   <FormLabel>Bio</FormLabel>
                     <Text borderBottom="1px solid grey" >{userData.bio}</Text>
                     <EditIcon onClick={handleBio}/>
@@ -112,7 +142,13 @@ const initState={
               </ModalBody>
 
               <ModalFooter>
-                <Button border="1px solid green" bg="white" borderRadius="50px"  mr={3} onClick={onClose}>
+                <Button
+                  border="1px solid green"
+                  bg="white"
+                  borderRadius="50px"
+                  mr={3}
+                  onClick={onClose}
+                >
                   Cancel
                 </Button>
                 {/* <Button onClick={handleSubmit} borderRadius="50px" bg="green" _hover={{color:"green"}} variant='ghost'>Save</Button> */}
@@ -122,7 +158,7 @@ const initState={
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default UserProfile
+export default UserProfile;
