@@ -89,7 +89,7 @@ const SignUp = () => {
             </InputRightElement>
             </InputGroup>
                 <Text fontSize="14px" mt="10px">By registering, you agree with our <Link>Terms & Conditions</Link>  and <Link>Privacy and Cookie Policy.</Link></Text>
-                <Button onClick={register} _hover={{bg:"rgb(65, 63, 63)"}} bg="black" color="white" mt="15px" w="100%">Register</Button>
+                <Button isLoading={loading} onClick={register} _hover={{bg:"rgb(65, 63, 63)"}} bg="black" color="white" mt="15px" w="100%">Register</Button>
         </TabPanel>
       
     </>
