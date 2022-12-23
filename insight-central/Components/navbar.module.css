@@ -11,6 +11,10 @@
     display: none;
 }
 
+.avtar{
+    margin-right: 20px;
+}
+
 @media screen and (min-width: 320px) and (max-width: 650px) {
     .search{
         display: none;
@@ -18,5 +22,8 @@
 
     .mobSearch{
         display: block;
+    }
+    .avtar{
+        margin-right: 5px;
     }
   }
