@@ -1,10 +1,10 @@
-# Elegant 
+# Insight-Central
 
-Project: make a E-Commerce Website
+Project: Blogging Website
 
-Elegant is an E-Commerce website that sells Fashion and Accessories products ..
+Insight-central is an Blog Writeing Website  ..
 
-&nbsp;&nbsp;&nbsp;&#160;In this project I have tried to make a E-Commerce Website. With all the efforts and the technology stack, that I have learned till now in the masai school.<br><br>
+&nbsp;&nbsp;&nbsp;&#160;In this project I have tried to make a Blogging Website. With all the efforts and the technology stack, that I have learned till now in the masai school.<br><br>
 
 ## Technology Stack Used
 
@@ -12,28 +12,20 @@ Elegant is an E-Commerce website that sells Fashion and Accessories products ..
 - CSS
 - JavaScript
 - NextJS
-- Redux
+- Moongose
 - Chakra-Ui
 - Express
+- MongoBD
 
 ## Flow of the website
 
-<b>USERSIDE</b>
-
-- When You land on hompage you should login first , for that click on login if already login in then just enter your ID and password. And if you are new then just create you credentials.
-- After that you see all variety of products on navbar of landing page.
-- After that you sort the items by price, sub-category and also by rating and then you can add to cart from there.
-- After adding items to the cart you will click on the cart to go into the cart page.
-- On cart page you can see all the items that you have added. You can delete the item from cart page if you want.
-- Add payment detail and proceed to pay.
-- Then you will select address and entre the coupon as "Flat30%off" then you will get 30rs discount on your total amount.
-- After clicking on next you will redirected to payment page where you can entre all your payment details , after clicking on payment your order will complete.
-- When You land on hompage you should login first , for that click on login if already login in then just enter your ID and password. And if you are new then just create you credentials.
 
 
 ## Snapshots 📷
 
-![Untitled design](https://user-images.githubusercontent.com/105644684/208608516-3d3ea5c7-8f20-4929-8c37-32943b4662d7.png)
+![3](https://user-images.githubusercontent.com/105644684/209333353-71859b0d-24de-4270-8b1c-5d20786e561f.png)
+![1](https://user-images.githubusercontent.com/105644684/209333361-fafb2b77-eaa0-401a-b504-a28606379f0c.png)
+![2](https://user-images.githubusercontent.com/105644684/209333364-ea001bce-d962-45c2-99d4-172b2826ec30.png)
 
 
 ### End Notes 📑
