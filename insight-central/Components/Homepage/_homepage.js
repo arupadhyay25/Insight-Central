@@ -15,50 +15,48 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   Divider,
   Tag,
-  Center,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FcMediumPriority } from "react-icons/fc";
 import { Tooltip } from "@chakra-ui/react";
 import { BsBookmarkPlus } from "react-icons/bs";
 import { MdOutlineDoNotDisturbOn } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
-// import { BsStarFill } from "react-icons/bs";
 import { GiStarShuriken } from "react-icons/gi";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import ProductDetails from "../../pages/carosoul/_productcarosoul";
 import Follower from "./_following";
-import Banner from "./_recomendation";
 import Link from "next/link";
 import styles from "./homepage.module.css";
-// for responsive carosoul
-import singleblog from "../../pages/singleblog";
 export default function Homepage() {
   const [data, setData] = useState([]);
+  const [authordata, setauthorData] = useState([]);
   const [page, setpage] = useState(1);
 
   //  this theme is handleing the follow
-
-  useEffect(() => {
-    const data = JSON.parse(sessionStorage.getItem("data"));
-    console.log(data);
-  });
-
   useEffect(() => {
     fetch(`https://zany-red-toad-cape.cyclic.app/blog?page=${page}`)
       .then((res) => res.json())
       .then((r) => {
-        setData(r.data);
+        setData(r.data.reverse());
+      });
+    fetch(`https://zany-red-toad-cape.cyclic.app/blog`)
+      .then((res) => res.json())
+      .then((r) => {
+        setauthorData(r.data);
       });
   }, [page]);
-  console.log(data);
+
+  const result = authordata
+    .map((item) => item.name)
+    .filter((name, index, self) => self.indexOf(name) === index)
+    .map((name) => {
+      return authordata.find((item) => item.name === name);
+    });
+
+  console.log(result);
 
   const favBlog = (id) => {
     const myHeaders = new Headers({
@@ -76,9 +74,6 @@ export default function Homepage() {
         if (!res.ok) {
           throw Error("Sorry, something went wrong");
         }
-      })
-      .then((res) => {
-        console.log("send successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -102,15 +97,25 @@ export default function Homepage() {
           throw new Error("Something went wrong on api server!");
         }
       })
-      .then((response) => {
-        console.log(response);
-        console.log("Delete Success");
-      })
       .catch((error) => {
         console.log("Can not Deleted for error");
         console.error(error);
       });
   };
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   return (
     <>
       <Container
@@ -133,40 +138,45 @@ export default function Homepage() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                width: "100%",
+                width: "85%",
+                margin: "auto",
               }}
             >
               <Heading>For you</Heading>
               <span>
                 <Button
                   onClick={() => setpage(page - 1)}
-                  colorScheme={"blackAlpha"}
+                  variant="ghost"
                   disabled={page == 1}
                 >
-                  -
+                  Previous
                 </Button>
                 &nbsp;
-                <Button colorScheme={"blackAlpha"}>{page}</Button>&nbsp;
+                <Button variant="ghost">{page}</Button>&nbsp;
                 <Button
                   onClick={() => setpage(page + 1)}
-                  colorScheme={"blackAlpha"}
                   disabled={page == 3}
+                  variant="ghost"
                 >
-                  +
+                  Next
                 </Button>
               </span>
             </div>
-            {/* carosul time */}
-            {/* <Box h="full"  w="full" border="2px"><ProductDetails/></Box> */}
-
-            {/* <Divider /> */}
             <SimpleGrid columns={4} columnGap={2}>
               {data.map((ele, i) => (
-                <GridItem p={10} key={i} colSpan={{ base: 4, md: 5 }}>
-                  <HStack>
-                    <AspectRatio ratio={1} w={6}>
-                      <Img src={ele.author.img} />
-                    </AspectRatio>
+                <GridItem
+                  p={"0 80px"}
+                  key={i}
+                  colSpan={{ base: 4, md: 5 }}
+                  alignItems={"center"}
+                >
+                  <HStack mt={5}>
+                    <Img
+                      borderRadius="full"
+                      boxSize="50px"
+                      src={ele.author.img}
+                      mb="10px"
+                    />
                     <Text
                       textTransform={"capitalize"}
                       fontWeight="bold"
@@ -174,139 +184,105 @@ export default function Homepage() {
                     >
                       {ele.author.name}
                     </Text>
-                    <Text fontWeight="bold" textAlign="left">
-                      - {ele.date}
-                    </Text>
-                    <GiStarShuriken size={20} color="rgb(255,192,23)" />
-                    <Text fontWeight="bold" textAlign="left">
-                      Member
+                    <Text fontWeight="normal" textAlign="left">
+                      {months[ele.date.split("T")[0].split("-")[1] - 1]}{" "}
+                      {ele.date.split("T")[0].split("-")[2]}
+                      {" , "}
+                      {ele.date.split("T")[0].split("-")[0]}
                     </Text>
                   </HStack>
                   {/* This is the middle section */}
-                  <Flex py="10" w="full">
+                  <Flex w="full" mt={5}>
                     <VStack alignItems="left" w="70%">
                       <Heading cursor="pointer" size="md">
                         <Link href={`/singleblog/${ele._id}`} target="_blank">
                           {ele.title}
                         </Link>
                       </Heading>
-                      <div
-                        style={{
-                          width: "90%",
-                          fontSize: "20px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {ele.body}
-                      </div>
-                    </VStack>
-                    <AspectRatio ratio={1} w={24}>
-                      <Img src={ele.img} />
-                    </AspectRatio>
-                  </Flex>
-                  {/* This is the last part */}
-                  <Flex gap={20}>
-                    <HStack>
-                      <Button
-                        size="xs"
-                        style={{ fontSize: "15px" }}
-                        textAlign="left"
-                      >
-                        {ele.category}
-                      </Button>
+                      <div className={styles.bodytext}>{ele.body}</div>
+                      <br />
+                      {/* This is the last part */}
+                      <Flex gap={20}>
+                        <HStack>
+                          <Button
+                            size="xs"
+                            style={{ fontSize: "15px" }}
+                            textAlign="left"
+                          >
+                            {ele.category}
+                          </Button>
 
-                      <Text size="s">5 minutes read</Text>
-                      <Text size="s"> - selected for you </Text>
-                    </HStack>
-                    <HStack gap={2}>
-                      <Tooltip
-                        hasArrow
-                        label="Save"
-                        bg="gray.800"
-                        color="white"
-                        placement="top"
-                      >
-                        <Box onClick={() => favBlog(ele._id)}>
-                          <BsBookmarkPlus size={20} />
-                        </Box>
-                      </Tooltip>
-                      <Tooltip
-                        hasArrow
-                        label="Show less like this"
-                        bg="gray.800"
-                        color="white"
-                        placement="top"
-                      >
-                        <Box onClick={() => deleteBlog(ele._id)}>
-                          <MdOutlineDoNotDisturbOn size={25} />
-                        </Box>
-                      </Tooltip>
-                      <Popover>
-                        <PopoverTrigger>
-                          <Box cursor="pointer">
-                            <BsThreeDots size={20} />
-                          </Box>
-                        </PopoverTrigger>
-                        <PopoverContent p={3}>
-                          <PopoverArrow />
-                          <PopoverCloseButton />
-                          <PopoverBody>Mute this author</PopoverBody>
-                          <PopoverBody>Mute this publications</PopoverBody>
-                          <PopoverBody>report</PopoverBody>
-                        </PopoverContent>
-                      </Popover>
-                    </HStack>
+                          <Text size="s">5 minutes read</Text>
+                          <Text size="s"> - selected for you </Text>
+                        </HStack>
+                        <HStack gap={2}>
+                          <Tooltip
+                            hasArrow
+                            label="Save"
+                            bg="gray.800"
+                            color="white"
+                            placement="top"
+                          >
+                            <Box onClick={() => favBlog(ele._id)}>
+                              <BsBookmarkPlus size={20} />
+                            </Box>
+                          </Tooltip>
+                          <Tooltip
+                            hasArrow
+                            label="Show less like this"
+                            bg="gray.800"
+                            color="white"
+                            placement="top"
+                          >
+                            <Box onClick={() => deleteBlog(ele._id)}>
+                              <MdOutlineDoNotDisturbOn size={25} />
+                            </Box>
+                          </Tooltip>
+                          <Popover>
+                            <PopoverTrigger>
+                              <Box cursor="pointer">
+                                <BsThreeDots size={20} />
+                              </Box>
+                            </PopoverTrigger>
+                            <PopoverContent p={3}>
+                              <PopoverArrow />
+                              <PopoverCloseButton />
+                              <PopoverBody>Mute this author</PopoverBody>
+                              <PopoverBody>Mute this publications</PopoverBody>
+                              <PopoverBody>report</PopoverBody>
+                            </PopoverContent>
+                          </Popover>
+                        </HStack>
+                      </Flex>
+                    </VStack>
+                    <VStack w={"20%"}>
+                      <Img w={"120px"} src={ele.img} />
+                    </VStack>
                   </Flex>
-                  <Divider color="gray" p={2} />
+                  <br />
+                  <Divider bgColor={"blackAlpha.700"} height="2px" />
                 </GridItem>
               ))}
             </SimpleGrid>
           </VStack>
           {/* this is right side */}
           <VStack
-            gap={8}
+            gap={5}
             alignItems="left"
             p={10}
             maxW={"container.sm"}
             border="2px"
             borderColor="gray.300"
+            mr={10}
           >
             <Button color="white" bg="black" borderRadius="full" size="lg">
               Get Unlimited Access
             </Button>
 
-            <Heading size="sm">2022 Review</Heading>
-
-            <SimpleGrid columns={4} columnGap={2} rowGap={10}>
-              {data.map((ele, i) => (
-                <GridItem key={i} colSpan="4">
-                  <HStack>
-                    <AspectRatio ratio={1} w={6}>
-                      <Img src={ele.author.img} />
-                    </AspectRatio>
-                    <Text textTransform={"capitalize"} textAlign="left">
-                      {ele.author.name}
-                    </Text>
-                    <Text textAlign="left">- December6</Text>
-                  </HStack>
-                  <Heading size="xs">{ele.title}</Heading>
-                </GridItem>
-              ))}
-            </SimpleGrid>
-            <Text color="rgb(26,137,23)">See full list</Text>
-
-            <VStack alignItems="center">
-              {/* icons */}
-
-              <Text>
-                Discover Medium writers you already follow on Twitter.
-              </Text>
-            </VStack>
-            {/* <Divider mb={5} /> */}
+            <VStack alignItems="center"></VStack>
             <VStack alignItems="left">
               <Heading size="sm">Recomended Topics</Heading>
+              <br />
               <SimpleGrid columns={4} columnGap={2} rowGap={2}>
                 <GridItem colSpan={1}>
                   <Tag size="sm" borderRadius="full" variant="solid" p={2}>
@@ -343,6 +319,7 @@ export default function Homepage() {
             {/* follow recomendation */}
             <VStack alignItems="left">
               <Heading size="sm">Who to follow</Heading>
+              <br />
               {data.map((ele, i) => (
                 <VStack alignItems="left" key={i}>
                   <HStack alignItems="left">
