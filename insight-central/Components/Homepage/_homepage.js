@@ -40,7 +40,7 @@ export default function Homepage() {
     fetch(`https://zany-red-toad-cape.cyclic.app/blog?page=${page}`)
       .then((res) => res.json())
       .then((r) => {
-        setData(r.data.reverse());
+        setData(r.data);
       });
     fetch(`https://zany-red-toad-cape.cyclic.app/blog`)
       .then((res) => res.json())

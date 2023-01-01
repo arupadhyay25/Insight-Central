@@ -1,5 +1,7 @@
 import {
   Button,
+  Center,
+  Divider,
   Heading,
   Image,
   Input,
@@ -20,7 +22,7 @@ function WritePost() {
     x = JSON.parse(sessionStorage.getItem("data")) || "";
     console.log(x.token);
   }
-  let route=useRouter()
+  let route = useRouter();
 
   let addpost = async () => {
     let headersList = {
@@ -50,7 +52,7 @@ function WritePost() {
     setimg("");
     setsetcategory("");
     settitle("");
-    route.push("/")
+    route.push("/");
   };
 
   useEffect(() => {
@@ -58,7 +60,7 @@ function WritePost() {
   });
 
   return (
-    <div style={{ width: "80%", margin: "auto" }}>
+    <div style={{ width: "80%", margin: "auto", border: "red" }}>
       <br />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Heading>Publish a Article</Heading>
@@ -66,10 +68,12 @@ function WritePost() {
           Post
         </Button>
       </div>
+      <Divider borderColor={"teal"} h="20px" />
       {img.length > 0 && (
         <div>
-          <br />
-          <Image src={img} alt="dfjkgh" />
+          <Center>
+            <Image w={"50%"} src={img} alt="dfjkgh" />
+          </Center>
         </div>
       )}
       <br />

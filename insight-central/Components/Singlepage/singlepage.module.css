@@ -1,0 +1,12 @@
+.body {
+  font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times,
+    serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  font-variant-caps: normal;
+  text-indent: 10%;
+  line-height: 1.8em;
+  word-wrap: break-word;
+  white-space:break-spaces;  
+}

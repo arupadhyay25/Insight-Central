@@ -23,6 +23,7 @@ import {
   Divider,
   Tag,
   Spacer,
+  Center,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FcMediumPriority } from "react-icons/fc";
@@ -39,7 +40,7 @@ import {
 import { GiStarShuriken } from "react-icons/gi";
 import Follower from "../Homepage/_following";
 import { BiCoffeeTogo } from "react-icons/bi";
-import { useRouter } from "next/router";
+import styles from "./singlepage.module.css";
 
 export default function Singlepage({ id }) {
   const [singledata, setSingledata] = useState({});
@@ -52,14 +53,6 @@ export default function Singlepage({ id }) {
       .then((r) => {
         setSingledata(r);
         setstatus(true);
-        console.log(1);
-      });
-      fetch("https://zany-red-toad-cape.cyclic.app/blog")
-      .then((res) => res.json())
-      .then((r) => {
-        setData(r.data);
-        setstatus(true);
-        console.log(2);
       });
   }
   useEffect(() => {
@@ -68,22 +61,24 @@ export default function Singlepage({ id }) {
 
   return (
     <>
-      <Container maxH="" maxW="container.2xl" p="20">
-        <Flex h="full" py="20">
+      <Container maxH="" maxW="container.2xl" px="20">
+        <Flex h="full">
           {/* this is left side */}
           <VStack
             w="80%"
             h="full"
-            p={{ base: 4, sm: 6 }}
-            spacing={10}
+            px={{ base: 4, sm: 6 }}
             align="flex-start"
             bg="white"
           >
-            <HStack>This is for navbar</HStack>
             <VStack alignItems="left" w="full">
               <Flex gap="50%">
-                <HStack gap={10}>
-                  <Img w={"50%"} src={singledata.img} />
+                <HStack gap={4}>
+                  <Img
+                    borderRadius={"full"}
+                    boxSize="70px"
+                    src={singledata.img}
+                  />
                   <Text>Raymond M.E. Aguirre</Text>
                 </HStack>
                 <HStack gap={3}>
@@ -118,155 +113,48 @@ export default function Singlepage({ id }) {
                   </Popover>
                 </HStack>
               </Flex>
-              <HStack alignItems="left">
+              <HStack display={"flex"} alignItems="center">
+                <Button
+                  borderRadius={"full"}
+                  colorScheme={"blackAlpha"}
+                  textTransform={"uppercase"}
+                >
+                  {singledata.category}
+                </Button>
                 <Text>19 Sep</Text>
                 <Text> - 5 minutes read</Text>
                 <GiStarShuriken color="rgb(255,192,23)" />
                 <Text> - Members only</Text>
               </HStack>
+              <br />
             </VStack>
             <VStack alignItems="left">
-              <Text>{singledata.category}</Text>
               <Heading size="2xl">{singledata.title}</Heading>
               <Spacer />
               <Spacer />
-              <Img src={singledata.img} />
+              <Spacer />
+              <Center>
+                <Img width={"60%"} src={singledata.img} />
+              </Center>
               <Spacer />
               <Spacer />
-              <Text size="xl">{singledata.body}</Text>
+              <p className={styles.body}>{singledata.body}</p>
 
               {/* all share icons  */}
             </VStack>
             <Divider borderColor={"red"} />
-            <Heading>Enjoy the read?Reward the writer.</Heading>
-            <HStack gap={20}>
-              <Text>
-                Your tip will go to Raymond M.E. Aguirre through a third-party
-                platform of their choice, letting them know you appreciate their
-                story.
-              </Text>
-              <Box
-                size="2xl"
-                borderRadius="full"
-                w="100px"
-                display="flex"
-                p={2}
-                bg="coral"
-                color="white"
-              >
-                <BiCoffeeTogo color="white" />
-                Giveatip
-              </Box>
-            </HStack>
-
-            <SimpleGrid bg="gray.100" columns={4} columnGap={2}>
-              {data.map((ele, i) => (
-                <GridItem p={10} key={i} colSpan={{ base: 4, md: 5 }}>
-                  <HStack>
-                    <AspectRatio ratio={1} w={6}>
-                      <Img src={ele.img} />
-                    </AspectRatio>
-                    <Text fontWeight="bold" textAlign="left">
-                      {ele.user_n}
-                    </Text>
-                    <Text fontWeight="bold" textAlign="left">
-                      - {ele.date}
-                    </Text>
-                    <GiStarShuriken size={20} color="rgb(255,192,23)" />
-                    <Text fontWeight="bold" textAlign="left">
-                      Member
-                    </Text>
-                  </HStack>
-                  {/* This is the middle section */}
-                  <Flex py="10" w="full">
-                    <VStack alignItems="left" w="70%">
-                      <Heading size="md">{ele.title}</Heading>
-                      <div
-                        style={{
-                          width: "90%",
-                          fontSize: "20px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {ele.body}
-                      </div>
-                    </VStack>
-                    <AspectRatio ratio={1} w={24}>
-                      <Img src={ele.img} />
-                    </AspectRatio>
-                  </Flex>
-                  {/* This is the last part */}
-                  <Flex gap={20}>
-                    <HStack>
-                      <Button
-                        size="xs"
-                        style={{ fontSize: "15px" }}
-                        textAlign="left"
-                      >
-                        {ele.category}
-                      </Button>
-
-                      <Text size="s">5 minutes read</Text>
-                      <Text size="s"> - selected for you </Text>
-                    </HStack>
-                    <HStack gap={2}>
-                      <Tooltip
-                        hasArrow
-                        label="Save"
-                        bg="gray.800"
-                        color="white"
-                        placement="top"
-                      >
-                        <Box>
-                          <BsBookmarkPlus size={20} />
-                        </Box>
-                      </Tooltip>
-                      <Tooltip
-                        hasArrow
-                        label="Show less like this"
-                        bg="gray.800"
-                        color="white"
-                        placement="top"
-                      >
-                        <Box>
-                          <MdOutlineDoNotDisturbOn size={25} />
-                        </Box>
-                      </Tooltip>
-                      <Popover>
-                        <PopoverTrigger>
-                          <Box cursor="pointer">
-                            <BsThreeDots size={20} />
-                          </Box>
-                        </PopoverTrigger>
-                        <PopoverContent p={3}>
-                          <PopoverArrow />
-                          <PopoverCloseButton />
-                          <PopoverBody>Mute this author</PopoverBody>
-                          <PopoverBody>Mute this publications</PopoverBody>
-                          <PopoverBody>report</PopoverBody>
-                        </PopoverContent>
-                      </Popover>
-                    </HStack>
-                  </Flex>
-                  <Divider borderColor="gray" p={5} />
-                </GridItem>
-              ))}
-            </SimpleGrid>
-            <HStack pl="38%" alignItems="center">
-              <Button borderRadius="full" p={5} color="white" bg="coral">
-                Read More from Illumination
-              </Button>
-            </HStack>
+            <br />
+            <br />
+            <br />
+            <br />
           </VStack>
           {/* this is right side */}
           <VStack
             gap={8}
-            maxH="2400px"
             alignItems="left"
             p={10}
             maxW="30%"
+            h="-webkit-fit-content"
             border="2px"
             borderColor="gray.300"
           >
@@ -274,7 +162,6 @@ export default function Singlepage({ id }) {
               Get Unlimited Access
             </Button>
 
-            <Heading size="sm">2022 Review</Heading>
             <VStack alignItems="left">
               <Img
                 borderRadius="full"
@@ -341,46 +228,6 @@ export default function Singlepage({ id }) {
                   </Tag>
                 </GridItem>
               </SimpleGrid>
-            </VStack>
-            {/* follow recomendation */}
-            <VStack alignItems="left">
-              <Heading size="sm">Who to follow</Heading>
-              {data.map((ele, i) => (
-                <VStack alignItems="left" key={i}>
-                  <HStack alignItems="left">
-                    <AspectRatio ratio={1} w={6}>
-                      <Img src={ele.img} />
-                    </AspectRatio>
-                    {/* <Text  >{ele.user_n}</Text> */}
-                  </HStack>
-                  <HStack gap={10}>
-                    <Text>This is sayan Ghosh A developer</Text>
-                    {/* <Follower/> */}
-                  </HStack>
-                </VStack>
-              ))}
-              <Text color="rgb(26,137,23)">See more suggestions</Text>
-            </VStack>
-
-            {/* this is for recently saved */}
-
-            <VStack alignItems="left" maxW={"container.lg"}>
-              {data.map((ele, i) => (
-                <VStack key={i} alignItems="left">
-                  <Flex alignItems="left" gap={5}>
-                    <AspectRatio ratio={1} w="5">
-                      <Img src={ele.img} />
-                    </AspectRatio>
-                    {/* <Text fontWeight="bold">{ele.user_n}</Text> */}
-                  </Flex>
-                  <Heading size="s">{ele.title}</Heading>
-                  <HStack>
-                    <Text>Date</Text>
-                    <Text> - 6 minutes read</Text>
-                    <GiStarShuriken size={20} color="rgb(255,192,23)" />
-                  </HStack>
-                </VStack>
-              ))}
             </VStack>
             <Text fontWeight="bold" color="rgb(26,137,23)">
               See all({data.length})
