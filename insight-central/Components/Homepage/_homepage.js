@@ -19,6 +19,8 @@ import {
   PopoverCloseButton,
   Divider,
   Tag,
+  Image,
+  Center,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Tooltip } from "@chakra-ui/react";
@@ -163,106 +165,120 @@ export default function Homepage() {
               </span>
             </div>
             <SimpleGrid columns={4} columnGap={2}>
-              {data.map((ele, i) => (
+              {data.length === 0 ? (
                 <GridItem
                   p={"0 80px"}
-                  key={i}
                   colSpan={{ base: 4, md: 5 }}
                   alignItems={"center"}
                 >
-                  <HStack mt={5}>
-                    <Img
-                      borderRadius="full"
-                      boxSize="50px"
-                      src={ele.author.img}
-                      mb="10px"
-                    />
-                    <Text
-                      textTransform={"capitalize"}
-                      fontWeight="bold"
-                      textAlign="left"
-                    >
-                      {ele.author.name}
-                    </Text>
-                    <Text fontWeight="normal" textAlign="left">
-                      {months[ele.date.split("T")[0].split("-")[1] - 1]}{" "}
-                      {ele.date.split("T")[0].split("-")[2]}
-                      {" , "}
-                      {ele.date.split("T")[0].split("-")[0]}
-                    </Text>
-                  </HStack>
-                  {/* This is the middle section */}
-                  <Flex w="full" mt={5}>
-                    <VStack alignItems="left" w="70%">
-                      <Heading cursor="pointer" size="md">
-                        <Link href={`/singleblog/${ele._id}`} target="_blank">
-                          {ele.title}
-                        </Link>
-                      </Heading>
-                      <div className={styles.bodytext}>{ele.body}</div>
-                      <br />
-                      {/* This is the last part */}
-                      <Flex gap={20}>
-                        <HStack>
-                          <Button
-                            size="xs"
-                            style={{ fontSize: "15px" }}
-                            textAlign="left"
-                          >
-                            {ele.category}
-                          </Button>
-
-                          <Text size="s">5 minutes read</Text>
-                          <Text size="s"> - selected for you </Text>
-                        </HStack>
-                        <HStack gap={2}>
-                          <Tooltip
-                            hasArrow
-                            label="Save"
-                            bg="gray.800"
-                            color="white"
-                            placement="top"
-                          >
-                            <Box onClick={() => favBlog(ele._id)}>
-                              <BsBookmarkPlus size={20} />
-                            </Box>
-                          </Tooltip>
-                          <Tooltip
-                            hasArrow
-                            label="Show less like this"
-                            bg="gray.800"
-                            color="white"
-                            placement="top"
-                          >
-                            <Box onClick={() => deleteBlog(ele._id)}>
-                              <MdOutlineDoNotDisturbOn size={25} />
-                            </Box>
-                          </Tooltip>
-                          <Popover>
-                            <PopoverTrigger>
-                              <Box cursor="pointer">
-                                <BsThreeDots size={20} />
-                              </Box>
-                            </PopoverTrigger>
-                            <PopoverContent p={3}>
-                              <PopoverArrow />
-                              <PopoverCloseButton />
-                              <PopoverBody>Mute this author</PopoverBody>
-                              <PopoverBody>Mute this publications</PopoverBody>
-                              <PopoverBody>report</PopoverBody>
-                            </PopoverContent>
-                          </Popover>
-                        </HStack>
-                      </Flex>
-                    </VStack>
-                    <VStack w={"20%"}>
-                      <Img w={"120px"} src={ele.img} />
-                    </VStack>
-                  </Flex>
-                  <br />
-                  <Divider bgColor={"blackAlpha.700"} height="2px" />
+                  <Center>
+                    <Image src="https://htmlburger.com/blog/wp-content/uploads/2021/07/The-Best-50-Website-Preloaders-Around-the-Web-Example-28.gif" />
+                  </Center>
                 </GridItem>
-              ))}
+              ) : (
+                data.map((ele, i) => (
+                  <GridItem
+                    p={"0 80px"}
+                    key={i}
+                    colSpan={{ base: 4, md: 5 }}
+                    alignItems={"center"}
+                  >
+                    <HStack mt={5}>
+                      <Img
+                        borderRadius="full"
+                        boxSize="50px"
+                        src={ele.author.img}
+                        mb="10px"
+                      />
+                      <Text
+                        textTransform={"capitalize"}
+                        fontWeight="bold"
+                        textAlign="left"
+                      >
+                        {ele.author.name}
+                      </Text>
+                      <Text fontWeight="normal" textAlign="left">
+                        {months[ele.date.split("T")[0].split("-")[1] - 1]}{" "}
+                        {ele.date.split("T")[0].split("-")[2]}
+                        {" , "}
+                        {ele.date.split("T")[0].split("-")[0]}
+                      </Text>
+                    </HStack>
+                    {/* This is the middle section */}
+                    <Flex w="full" mt={5}>
+                      <VStack alignItems="left" w="70%">
+                        <Heading cursor="pointer" size="md">
+                          <Link href={`/singleblog/${ele._id}`} target="_blank">
+                            {ele.title}
+                          </Link>
+                        </Heading>
+                        <div className={styles.bodytext}>{ele.body}</div>
+                        <br />
+                        {/* This is the last part */}
+                        <Flex gap={20}>
+                          <HStack>
+                            <Button
+                              size="xs"
+                              style={{ fontSize: "15px" }}
+                              textAlign="left"
+                            >
+                              {ele.category}
+                            </Button>
+
+                            <Text size="s">5 minutes read</Text>
+                            <Text size="s"> - selected for you </Text>
+                          </HStack>
+                          <HStack gap={2}>
+                            <Tooltip
+                              hasArrow
+                              label="Save"
+                              bg="gray.800"
+                              color="white"
+                              placement="top"
+                            >
+                              <Box onClick={() => favBlog(ele._id)}>
+                                <BsBookmarkPlus size={20} />
+                              </Box>
+                            </Tooltip>
+                            <Tooltip
+                              hasArrow
+                              label="Show less like this"
+                              bg="gray.800"
+                              color="white"
+                              placement="top"
+                            >
+                              <Box onClick={() => deleteBlog(ele._id)}>
+                                <MdOutlineDoNotDisturbOn size={25} />
+                              </Box>
+                            </Tooltip>
+                            <Popover>
+                              <PopoverTrigger>
+                                <Box cursor="pointer">
+                                  <BsThreeDots size={20} />
+                                </Box>
+                              </PopoverTrigger>
+                              <PopoverContent p={3}>
+                                <PopoverArrow />
+                                <PopoverCloseButton />
+                                <PopoverBody>Mute this author</PopoverBody>
+                                <PopoverBody>
+                                  Mute this publications
+                                </PopoverBody>
+                                <PopoverBody>report</PopoverBody>
+                              </PopoverContent>
+                            </Popover>
+                          </HStack>
+                        </Flex>
+                      </VStack>
+                      <VStack w={"20%"}>
+                        <Img w={"120px"} src={ele.img} />
+                      </VStack>
+                    </Flex>
+                    <br />
+                    <Divider bgColor={"blackAlpha.700"} height="2px" />
+                  </GridItem>
+                ))
+              )}
             </SimpleGrid>
           </VStack>
           {/* this is right side */}
